@@ -10,7 +10,7 @@ import UIKit
 
 class ToDoTableViewController: UITableViewController {
 
-    let itemArray = ["find Mike", "Buy Eggs", "Destroy"]
+    var itemArray = ["find Mike", "Buy Eggs", "Destroy"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,6 +43,28 @@ class ToDoTableViewController: UITableViewController {
         
     }
 
-
+    @IBAction func PlusClicked(_ sender: UIBarButtonItem) {
+        
+        var textbox = UITextField()
+        let ac = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+        
+        ac.addTextField { (text) in
+            text.placeholder = "Name of new item"
+            textbox = text
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
+            if let text = textbox.text {
+                self.itemArray.append(text)
+                self.tableView.reloadData()
+            }
+        }
+        ac.addAction(addAction)
+        ac.addAction(cancelAction)
+        present(ac, animated: true, completion: nil)
+    }
+    
 }
 
